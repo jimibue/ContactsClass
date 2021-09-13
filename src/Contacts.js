@@ -1,7 +1,8 @@
 import React from "react";
 import { Button, Table } from "semantic-ui-react";
+import Contact from "./Contact";
 
-const Contacts = ({ contacts }) => (
+const Contacts = ({ contacts, deleteContact, updateContact }) => (
   <Table celled padded>
     <Table.Header>
       <Table.Row>
@@ -13,13 +14,11 @@ const Contacts = ({ contacts }) => (
 
     <Table.Body>
       {contacts.map((contact) => (
-        <Table.Row key={contact.id}>
-          <Table.Cell>{contact.name}</Table.Cell>
-          <Table.Cell>{contact.phone}</Table.Cell>
-          <Table.Cell>
-            <Button color="blue">Delete</Button>
-          </Table.Cell>
-        </Table.Row>
+        <Contact
+          updateContact={updateContact}
+          deleteContact={deleteContact}
+          {...contact}
+        />
       ))}
     </Table.Body>
   </Table>

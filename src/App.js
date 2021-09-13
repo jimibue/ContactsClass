@@ -14,11 +14,47 @@ class App extends Component {
       { id: 3, name: "Cosmo", phone: "802-134-9876" },
     ],
   };
+  // this will be called on first mount
+  async componentDidMount() {
+    console.log("mounted");
+  }
+  // this will be called when state is changed
+  componentDidUpdate() {
+    console.log("updated");
+  }
+  addContact = (contact) => {
+    console.log(contact);
+    // calling setState will trigger render()
+    this.setState({
+      contacts: [contact, ...this.state.contacts],
+    });
+  };
+
+  updateContact = (contact) => {
+    let updateContacts = this.state.contacts.map((c) =>
+      c.id === contact.id ? contact : c
+    );
+
+    this.setState({
+      contacts: updateContacts,
+    });
+  };
+
+  deleteContact = (id) => {
+    let filteredContacts = this.state.contacts.filter((c) => c.id !== id);
+    this.setState({
+      contacts: filteredContacts,
+    });
+  };
   render() {
     return (
       <Container>
-        <ContactForm />
-        <Contacts contacts={this.state.contacts} />
+        <ContactForm addContact={this.addContact} />
+        <Contacts
+          updateContact={this.updateContact}
+          deleteContact={this.deleteContact}
+          contacts={this.state.contacts}
+        />
       </Container>
     );
   }
